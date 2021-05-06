@@ -64,6 +64,7 @@ export class WebSocketWorker extends Observer {
      * Uninitializes the connection of the client to the service.
      */
     close() {
+        this.wsClient.removeAllListeners();
         this.rtcService.removeObserver(this.uuid);
     }
 }
