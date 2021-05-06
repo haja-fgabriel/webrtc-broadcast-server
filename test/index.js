@@ -146,6 +146,24 @@ describe('RTCService', function() {
         service = new RTCService(repository);
     });
 
+    it('add client with no observer', function(done) {
+        try {
+            service.addClient('default-room', '12222');
+            assert(false);
+        } catch(e) {
+            done();
+        }
+    });
+
+    it('add default observer', function(done) {
+        try {
+            service.addObserver('aaaaa', new Observer('aaaaa'));
+            assert(false);
+        } catch(e) {
+            done();
+        }
+    });
+
     it('add client', function(done) {
         mockObserver = new class extends Observer {
             notify(message, content) {
