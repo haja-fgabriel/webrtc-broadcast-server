@@ -37,6 +37,8 @@ export class WebSocketWorker extends Observer {
             service.addClient(roomName, uuid);
             this.inRoom = roomName;
         });
+
+        // TODO add handler for removing client
         
         this.wsClient.on('[webrtc]send-offer', function(to, sdp) {
             service.notify(to, '[webrtc]send-offer', uuid, sdp);
