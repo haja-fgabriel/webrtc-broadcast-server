@@ -2,7 +2,7 @@
 Signaling server made for broadcasting. It is the implementation of my B.Sc. thesis idea.
 
 ## Prerequisites
-1. Node.js version 14.16.1 (older versions may work too)
+1. Node.js version 14.16.1 (older versions may work too) - make sure you have npm installed
 
 ## Installation
 1. Clone (or download) the repo wherever you want on your computer
