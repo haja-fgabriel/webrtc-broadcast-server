@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0270" tests="12" failures="1">
+  <testsuite name="Root Suite" timestamp="2021-04-21T21:02:44" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="RTCClientNode" timestamp="2021-04-21T21:02:44" tests="2" file="D:\Documents\Facultate\Licenta\node-server\test\index.js" time="0.0000" failures="0">
+    <testcase name="RTCClientNode initiation" time="0.0000" classname="initiation">
+    </testcase>
+    <testcase name="RTCClientNode add two sons" time="0.0000" classname="add two sons">
+    </testcase>
+  </testsuite>
+  <testsuite name="RTCClientTree" timestamp="2021-04-21T21:02:44" tests="4" file="D:\Documents\Facultate\Licenta\node-server\test\index.js" time="0.0000" failures="0">
+    <testcase name="RTCClientTree initiation" time="0.0000" classname="initiation">
+    </testcase>
+    <testcase name="RTCClientTree add root" time="0.0000" classname="add root">
+    </testcase>
+    <testcase name="RTCClientTree add two sons" time="0.0000" classname="add two sons">
+    </testcase>
+    <testcase name="RTCClientTree add more sons" time="0.0000" classname="add more sons">
+    </testcase>
+  </testsuite>
+  <testsuite name="RTCRoom" timestamp="2021-04-21T21:02:45" tests="4" file="D:\Documents\Facultate\Licenta\node-server\test\index.js" time="0.0000" failures="0">
+    <testcase name="RTCRoom add one client" time="0.0000" classname="add one client">
+    </testcase>
+    <testcase name="RTCRoom getParent with 1 client" time="0.0000" classname="getParent with 1 client">
+    </testcase>
+    <testcase name="RTCRoom getParent with 3 clients" time="0.0000" classname="getParent with 3 clients">
+    </testcase>
+    <testcase name="RTCRoom getParent with 7 clients" time="0.0000" classname="getParent with 7 clients">
+    </testcase>
+  </testsuite>
+  <testsuite name="RTCRoomInMemoryRepository" timestamp="2021-04-21T21:02:45" tests="1" file="D:\Documents\Facultate\Licenta\node-server\test\index.js" time="0.0010" failures="0">
+    <testcase name="RTCRoomInMemoryRepository add 1 room" time="0.0010" classname="add 1 room">
+    </testcase>
+  </testsuite>
+  <testsuite name="RTCService" timestamp="2021-04-21T21:02:45" tests="1" file="D:\Documents\Facultate\Licenta\node-server\test\index.js" time="0.0260" failures="1">
+    <testcase name="RTCService add client" time="0.0260" classname="add client">
+      <failure message="The expression evaluated to a falsy value:
+
+  before(function() {
+      repository = new RTCRoomInMemoryRepository();
+      service = new RTCService(repository);
+  })
+" type="AssertionError"><![CDATA[AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  before(function() {
+      repository = new RTCRoomInMemoryRepository();
+      service = new RTCService(repository);
+  })
+
+    at Context.<anonymous> (test\/index.js:143:9)
+    at processImmediate (internal/timers.js:461:21)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

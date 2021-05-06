@@ -1,0 +1,27 @@
+{
+  "name": "smart-webrtc-broadcast",
+  "version": "0.0.1",
+  "description": "Signaling server for WebRTC broadcasting",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "backpack dev",
+    "test": "mocha --require @babel/register --recursive \"test/**/*.js\" --timeout 10000",
+    "coverage": "nyc npm run test"
+  },
+  "author": "Haja Florin-Gabriel",
+  "license": "MIT",
+  "dependencies": {
+    "backpack-core": "^0.8.4",
+    "socket.io": "^3.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/register": "^7.13.16",
+    "mocha": "^8.3.2",
+    "mocha-junit-reporter": "^2.0.0",
+    "nyc": "^15.1.0",
+    "socket.io-client": "^4.0.1"
+  }
+}
