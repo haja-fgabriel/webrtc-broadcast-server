@@ -165,16 +165,32 @@ describe('RTCService', function() {
     });
 
     it('add client', function(done) {
-        mockObserver = new class extends Observer {
+        service.addObserver('12333', mockObserver(done));
+        service.addClient('default-room', '12333');
+        assert(service.getClientsForRoom('default-room').length === 1);
+    });
+
+    // it('remove client', function(done) {
+    //     service.addObserver('giorno', mockObserver(() => {}));
+    //     service.addClient('default-room', 'giorno');
+        
+    //     service.removeObserver('giorno');
+    //     try {
+    //         service.addClient('default-room', 'giorno');
+    //         assert(false);
+    //     } catch(e) {
+    //         done();
+    //     }
+    // });
+
+    function mockObserver(done) {
+        return new class extends Observer {
             notify(message, content) {
                 assert(message === '[response]rtc:joining-as-broadcaster');
                 done();
             }
         };
-        service.addObserver('12333', mockObserver);
-        service.addClient('default-room', '12333');
-        assert(service.getClientsForRoom('default-room').length === 1);
-    });
+    }
 });
 
 describe('RTC WebSockets', function() {
