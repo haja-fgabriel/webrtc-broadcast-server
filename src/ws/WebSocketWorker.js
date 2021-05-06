@@ -15,6 +15,10 @@ export class WebSocketWorker extends Observer {
         this.initialize();
     }
 
+    /**
+     * Initializes the event handlers and adds it to the service's 
+     * observable list.
+     */
     initialize() {
         this.rtcService.addObserver(this.uuid, this);
 
@@ -47,6 +51,11 @@ export class WebSocketWorker extends Observer {
         });
     }
 
+    /**
+     * Notifies the connected client an emitted message containing arguments.
+     * @param {string} message 
+     * @param  {...any} args 
+     */
     notify(message, ...args) {
         this.wsClient.emit(message, ...args);
     }
