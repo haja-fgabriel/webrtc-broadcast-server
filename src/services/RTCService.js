@@ -19,13 +19,15 @@ export class RTCService extends Observable {
      * Adds a client to a given room.
      * @param {string} roomName 
      * @param {*} client 
+     * @returns {Promise<void | Error>}
      */
-    addClient(roomName, client) {
+    async addClient(roomName, client) {
         var room = this.roomRepository.get(roomName);
         
         if (this._observers.get(client) === undefined) {
-            throw new Error(`Please add the client with ID ${client} to the`
-             + ' observers list.');
+            return Promise.reject(
+                new Error(`Please add the client with ID  ${client} to the`
+                    + ' observers list.'));
         }
 
         if (room === undefined) {
@@ -51,6 +53,7 @@ export class RTCService extends Observable {
         }
         
         // TODO notify observer
+        return Promise.resolve();
     }
 
     /**
