@@ -1,6 +1,6 @@
 import { RTCClientNode, RTCClientTree, RTCRoom } from '../src/models';
 import assert from 'assert';
-import { RTCRoomInMemoryRepository } from '../src/repositories/RTCRoomInMemoryRepository';
+import { RTCRoomInMemoryRepository } from '../src/repositories';
 import { RTCService } from '../src/services/RTCService';
 import { WebSocketServer } from '../src/ws/WebSocketServer';
 import openSocket from 'socket.io-client';
@@ -248,37 +248,46 @@ describe('RTC WebSockets', function() {
             twoClientsCommunication('first-room', clients[0], clients[1], done);
         });
 
-        it('connect 2 other clients', function(done) {
-            twoClientsCommunication('second-room', clients[2], clients[3], done);
-        });
+        it('connect 2 other clients', 
+            function(done) {
+                twoClientsCommunication(
+                    'second-room', clients[2], clients[3], done);
+            });
 
-        it('try to connect to another room 1 already connected client', function(done) {
-            tryConnectingAgain('third-room', clients[2], done);
-        });
+        it('try to connect to another room 1 already connected client', 
+            function(done) {
+                tryConnectingAgain('third-room', clients[2], done);
+            });
 
-        it('try to connect to the same room 1 already connected client', function(done) {
-            tryConnectingAgain('second-room', clients[2], done);
-        });
+        it('try to connect to the same room 1 already connected client', 
+            function(done) {
+                tryConnectingAgain('second-room', clients[2], done);
+            });
         
-        it('connect 3rd client', function(done) {
-            connectClientToAlreadyConnectedParent('first-room', clients[0], clients[4], done);
-        });
+        it('connect 3rd client', 
+            function(done) {
+                connectClientToAlreadyConnectedParent(
+                    'first-room', clients[0], clients[4], done);
+            });
 
         function tryConnectingAgain(room, client, done) {
             client.emit('[request]rtc:room:join', room);
             client.removeAllListeners();
-            client.on('[response]rtc:joining-as-broadcaster', () => assert(false));
+            client.on('[response]rtc:joining-as-broadcaster', 
+                () => assert(false));
             client.on('[response]rtc:joining-as-viewer', () => assert(false));
             client.on('[error]rtc:room:already-connected', function() {
                 done();
             });
         }
 
-        function connectClientToAlreadyConnectedParent(room, first, second, done) {
+        function connectClientToAlreadyConnectedParent(
+                room, first, second, done) {
             first.removeAllListeners();
             second.removeAllListeners();
             second.emit('[request]rtc:room:join', room);
-            second.on('[response]rtc:joining-as-broadcaster', () => assert(false));
+            second.on('[response]rtc:joining-as-broadcaster', 
+                () => assert(false));
             second.on('[response]rtc:joining-as-viewer', function() {
                 let roomInstance = repository.get(room);
                 assert(roomInstance.topology.root.sons[0].parent === 
@@ -287,12 +296,15 @@ describe('RTC WebSockets', function() {
                     first.emit('[webrtc]send-offer', to, '12312421312');
                     second.on('[webrtc]send-offer', function(from, _sdp) {
                         second.emit('[webrtc]answer-offer', from, '3231222');
-                        first.on('[webrtc]answer-offer', function(from, localMockSdp) {
-                                first.emit('[webrtc]ice-candidate', from, '123');
-                                second.on('[webrtc]ice-candidate', function(ice) {
-                                    done();
-                                });
-                        });
+                        first.on('[webrtc]answer-offer', 
+                            function(from, localMockSdp) {
+                                first.emit(
+                                    '[webrtc]ice-candidate', from, '123');
+                                second.on('[webrtc]ice-candidate', 
+                                    function(ice) {
+                                        done();
+                                    });
+                            });
                     });
                 });
             });
@@ -303,7 +315,8 @@ describe('RTC WebSockets', function() {
             second.removeAllListeners();
             first.emit('[request]rtc:room:join', room);
             first.on('[response]rtc:joining-as-broadcaster', function() {
-                connectClientToAlreadyConnectedParent(room, first, second, done);
+                connectClientToAlreadyConnectedParent(
+                    room, first, second, done);
             });
         }
 
