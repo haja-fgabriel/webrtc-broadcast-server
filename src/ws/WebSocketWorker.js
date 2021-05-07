@@ -33,7 +33,7 @@ export class WebSocketWorker extends Observer {
                 wsClient.emit('[error]rtc:room:already-connected');
                 return;
             }
-            service.addClient(roomName, uuid)
+            service.joinRoom(roomName, uuid)
                 .then(() => { this.inRoom = roomName })
                 .catch((e) => {
                     wsClient && wsClient.emit('[error]rtc:room', e);

@@ -21,7 +21,7 @@ export class RTCService extends Observable {
      * @param {*} client 
      * @returns {Promise<void | Error>}
      */
-    async addClient(roomName, client) {
+    async joinRoom(roomName, client) {
         var room = this.roomRepository.get(roomName);
         
         if (this._observers.get(client) === undefined) {
