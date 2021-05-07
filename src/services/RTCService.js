@@ -1,5 +1,5 @@
 import { RTCClientNode, RTCRoom } from "../models";
-import { RTCRoomInMemoryRepository } from "../repositories/RTCRoomInMemoryRepository";
+import { RTCRoomInMemoryRepository } from "../repositories";
 import { Observable } from "../utils";
 
 /**
@@ -46,7 +46,8 @@ export class RTCService extends Observable {
             room.addClient(client);
 
             // TODO add parameters too
-            super.notify(client, '[response]rtc:joining-as-broadcaster', undefined);
+            super.notify(
+                client, '[response]rtc:joining-as-broadcaster', undefined);
         }
         
         // TODO notify observer
