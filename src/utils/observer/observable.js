@@ -22,9 +22,15 @@ export class Observable {
         this._observers.delete(uuid);
     }
 
+    /**
+     * Notifies the observer with the given UUID.
+     * @param {string} uuid 
+     * @param {string} message 
+     * @param  {...any} args 
+     */
     notify(uuid, message, ...args) {
         if (this._observers.get(uuid) === undefined) {
-            throw new Error()
+            throw new Error('No observer defined with UUID ' + uuid);
         }
         this._observers.get(uuid).notify(message, ...args);
     }
