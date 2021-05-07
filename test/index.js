@@ -148,7 +148,7 @@ describe('RTCService', function() {
 
     it('add client with no observer', function(done) {
         try {
-            service.addClient('default-room', '12222');
+            service.joinRoom('default-room', '12222');
             assert(false);
         } catch(e) {
             done();
@@ -166,17 +166,17 @@ describe('RTCService', function() {
 
     it('add client', function(done) {
         service.addObserver('12333', mockObserver(done));
-        service.addClient('default-room', '12333');
+        service.joinRoom('default-room', '12333');
         assert(service.getClientsForRoom('default-room').length === 1);
     });
 
     // it('remove client', function(done) {
     //     service.addObserver('giorno', mockObserver(() => {}));
-    //     service.addClient('default-room', 'giorno');
+    //     service.joinRoom('default-room', 'giorno');
         
     //     service.removeObserver('giorno');
     //     try {
-    //         service.addClient('default-room', 'giorno');
+    //         service.joinRoom('default-room', 'giorno');
     //         assert(false);
     //     } catch(e) {
     //         done();
