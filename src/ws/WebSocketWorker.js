@@ -3,11 +3,15 @@ import { Socket } from 'socket.io-client'
 import { RTCService } from '../services/RTCService'
 import { Observer } from '../utils'
 
+/**
+ * A class that wraps the signals receipt from each client. It can receive
+ * notifications from an Observable object (RTCService in this case)
+ */
 export class WebSocketWorker extends Observer {
   /**
-     * @param {RTCService} rtcService
-     * @param {Socket} wsClient
-     */
+   * @param {RTCService} rtcService
+   * @param {Socket} wsClient
+   */
   constructor (uuid, rtcService, wsClient) {
     super(uuid)
     this.rtcService = rtcService
@@ -17,9 +21,9 @@ export class WebSocketWorker extends Observer {
   }
 
   /**
-     * Initializes the event handlers and adds it to the service's
-     * observable list.
-     */
+   * Initializes the event handlers and adds it to the service's
+   * observable list.
+   */
   initialize () {
     this.rtcService.addObserver(this.uuid, this)
 
@@ -57,17 +61,17 @@ export class WebSocketWorker extends Observer {
   }
 
   /**
-     * Notifies the connected client an emitted message containing arguments.
-     * @param {string} message
-     * @param  {...any} args
-     */
+   * Notifies the connected client an emitted message containing arguments.
+   * @param {string} message
+   * @param {...any} args
+   */
   notify (message, ...args) {
     this.wsClient.emit(message, ...args)
   }
 
   /**
-     * Uninitializes the connection of the client to the service.
-     */
+   * Uninitializes the connection of the client to the service.
+   */
   close () {
     this.wsClient.removeAllListeners()
     this.rtcService.removeObserver(this.uuid)
