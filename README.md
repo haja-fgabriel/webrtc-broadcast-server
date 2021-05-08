@@ -11,6 +11,7 @@ Linted with ESLint (with standard JS guidelines), transpiled with Babel, tested 
 2. ``npm install`` from the root folder of the cloned repo
 
 ## Usage
+- ``npm build`` - compiles the server to old-school JS
 - ``npm start`` - starts the server normally (on port 8000). An environment variable will be used in a future commit.
 - ``npm test`` - runs all the tests
 - ``npm run coverage`` - runs all the tests and get a coverage log 
