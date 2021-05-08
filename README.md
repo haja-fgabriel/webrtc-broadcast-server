@@ -1,5 +1,6 @@
 # webrtc-smart-signaling
 Signaling server made for broadcasting. It is the implementation of my B.Sc. thesis idea.
+Linted with ESLint (with standard JS guidelines), transpiled with Babel, tested with Mocha and using Backpack as the build system (supports recompilation at saving).
 
 ## Prerequisites
 1. Node.js version 14.16.1 (older versions may work too) - make sure you have npm installed
