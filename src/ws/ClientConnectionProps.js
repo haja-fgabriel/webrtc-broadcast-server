@@ -1,7 +1,4 @@
-function ClientSessionProps() {
+/* eslint-disable no-unused-vars */
+function ClientSessionProps () {
 
 }
-
-ClientSessionProps.prototype = {
-
-};

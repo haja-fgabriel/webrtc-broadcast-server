@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-env mocha */
 import { RTCClientNode, RTCClientTree, RTCRoom } from '../src/models'
 import assert from 'assert'
 import { RTCRoomInMemoryRepository } from '../src/repositories'

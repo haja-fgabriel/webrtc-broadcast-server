@@ -1,1 +1,1 @@
-export * from './RTCRoomInMemoryRepository';
+export * from './RTCRoomInMemoryRepository'

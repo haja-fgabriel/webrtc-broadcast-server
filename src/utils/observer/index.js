@@ -1,2 +1,2 @@
-export * from './observable';
-export * from './observer';
+export * from './observable'
+export * from './observer'
