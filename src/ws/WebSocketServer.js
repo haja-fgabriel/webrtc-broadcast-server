@@ -28,11 +28,13 @@ export class WebSocketServer {
   initialize () {
     this.io.on('connection', client => {
       const uuid = uuidv4()
+      console.log('new client with uuid ' + uuid)
       const workers = this._workers
       const newWorker = new WebSocketWorker(uuid, this.rtcService, client)
       workers.set(uuid, newWorker)
 
       client.on('disconnect', function () {
+        console.log('disconnecting client with uuid ' + uuid)
         newWorker.close()
         workers.delete(uuid)
       })

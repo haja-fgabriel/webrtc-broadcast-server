@@ -41,6 +41,7 @@ export class RTCService extends Observable {
       const parent = room.getParentForClient(client)
       if (parent) {
         // TODO maybe add more args
+        console.log('send make-offer to parent')
         super.notify(parent, '[webrtc]make-offer', client)
       }
     } else {
