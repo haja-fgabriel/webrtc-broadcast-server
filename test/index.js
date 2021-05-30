@@ -170,6 +170,7 @@ describe('RTCService', function () {
     assert(service.getClientsForRoom('default-room').length === 1)
   })
 
+  // TODO add tests for client removal
   // it('remove client', function(done) {
   //     service.addObserver('giorno', mockObserver(() => {}));
   //     service.joinRoom('default-room', 'giorno');
