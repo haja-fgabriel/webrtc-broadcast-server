@@ -6,6 +6,7 @@ import { RTCService } from '../src/services/RTCService'
 import { WebSocketServer } from '../src/ws/WebSocketServer'
 import openSocket from 'socket.io-client'
 import { Observer } from '../src/utils'
+import { RTCClientLinkedList } from '../src/models/RTCClientLinkedList'
 
 describe('RTCClientNode', function () {
   let node
@@ -80,6 +81,54 @@ describe('RTCClientTree', function () {
         assert(tree.root.sons.length === 2)
         assert(tree.root.sons[0].sons.length === 2)
         assert(tree.root.sons[0].sons[0].sons.length === 1)
+      }
+    }
+  })
+})
+
+describe('RTCClientLinkedList', function () {
+  let list
+  before(() => {
+    list = new RTCClientLinkedList()
+  })
+
+  it('initiation', function () {
+    assert(list.size === 0)
+    assert(list.root === null)
+  })
+
+  it('add root', function () {
+    const node = new RTCClientNode(1, 'node.js')
+    list.add(node)
+    assert(list.size === 1)
+  })
+
+  it('add two sons', function () {
+    assert(list.root !== null)
+    const son = new RTCClientNode(22, 2)
+    const otherSon = new RTCClientNode(32, 5)
+    list.add(son)
+    list.add(otherSon)
+    assert(list.size === 3)
+    assert(son.parent === list.root)
+    assert(otherSon.parent === son)
+    assert(list.root.sons.length === 1)
+    assert(list.root.sons[0] === son)
+    assert(son.sons[0] === otherSon)
+  })
+
+  it('add more sons', function () {
+    assert(list.root !== null)
+    const sons = []
+    for (let i = 0; i < 3; i++) {
+      const son = new RTCClientNode()
+      sons.push(son)
+      list.add(son)
+      if (i === 2) {
+        assert(list.size === 6)
+        assert(list.root.sons.length === 1)
+        assert(list.root.sons[0].sons.length === 1)
+        assert(list.root.sons[0].sons[0].sons.length === 1)
       }
     }
   })
