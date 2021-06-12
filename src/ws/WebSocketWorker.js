@@ -56,7 +56,7 @@ export class WebSocketWorker extends Observer {
     })
 
     this.wsClient.on('[webrtc]ice-candidate', function (to, iceCandidates) {
-      service.notify(to, '[webrtc]ice-candidate', iceCandidates)
+      service.notify(to, '[webrtc]ice-candidate', uuid, iceCandidates)
     })
   }
 
