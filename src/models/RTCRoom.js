@@ -1,6 +1,8 @@
 import { RTCClientNode } from '.'
 import { RTCClientTopologyFactory } from '../factories'
 
+const detectMocha = require('detect-mocha')
+
 /**
  * A model of a broadcasting room, including the connected clients in their
  * topology.
@@ -9,7 +11,7 @@ import { RTCClientTopologyFactory } from '../factories'
 export default function RTCRoom (name) {
   this.name = name
   // TODO complete implemenation of object
-  this.topologyType = process.env.CLIENT_TOPOLOGY || 'tree'
+  this.topologyType = (!detectMocha() && process.env.CLIENT_TOPOLOGY) || 'tree'
   this.factory = new RTCClientTopologyFactory()
   this.broadcasterID = undefined
   this.topology = this.factory.create(this.topologyType)
