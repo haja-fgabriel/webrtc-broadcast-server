@@ -1,4 +1,5 @@
-import { RTCClientNode, RTCClientTree } from '.'
+import { RTCClientNode } from '.'
+import { RTCClientTopologyFactory } from '../factories'
 
 /**
  * A model of a broadcasting room, including the connected clients in their
@@ -8,8 +9,10 @@ import { RTCClientNode, RTCClientTree } from '.'
 export default function RTCRoom (name) {
   this.name = name
   // TODO complete implemenation of object
+  this.topologyType = process.env.CLIENT_TOPOLOGY || 'tree'
+  this.factory = new RTCClientTopologyFactory()
   this.broadcasterID = undefined
-  this.topology = new RTCClientTree()
+  this.topology = this.factory.create(this.topologyType)
   this.clients = new Map()
 }
 
