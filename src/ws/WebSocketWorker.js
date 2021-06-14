@@ -34,6 +34,7 @@ export class WebSocketWorker extends Observer {
 
     // Event handlers that link this worker to the service
     this.wsClient.on('[request]rtc:room:join', function (roomName) {
+      console.log(`client ${uuid} requesting to join room '${roomName}'`)
       if (this.inRoom) {
         wsClient.emit('[error]rtc:room:already-connected', this.inRoom)
         return
@@ -78,5 +79,6 @@ export class WebSocketWorker extends Observer {
     if (this.inRoom) {
       this.rtcService.removeClient(this.inRoom, this.uuid)
     }
+    this.wsClient.disconnect && this.wsClient.disconnect()
   }
 }
