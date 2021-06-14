@@ -3,6 +3,14 @@ import { RTCService } from '../services/RTCService'
 import { uuidv4 } from '../utils'
 import { WebSocketWorker } from './WebSocketWorker'
 
+const fs = require('fs')
+const https = require('https')
+const http = require('http')
+const cors = require('cors')
+const app = require('express')()
+
+app.use(cors())
+
 export class WebSocketServer {
   /**
      * @param {number} port
@@ -11,7 +19,18 @@ export class WebSocketServer {
   constructor (port, rtcService) {
     this._workers = new Map()
 
-    this.io = require('socket.io')({
+    if (process.env.HTTPS === 'true') {
+      this.server = https.createServer({
+        key: fs.readFileSync('cert/privkey.pem', 'utf-8'),
+        cert: fs.readFileSync('cert/cert.pem', 'utf-8'),
+        ca: fs.readFileSync('cert/chain.pem', 'utf-8'),
+        requestCert: false,
+        requestUnauthorized: false
+      }, app)
+    } else {
+      this.server = http.createServer({}, app)
+    }
+    this.io = require('socket.io')(this.server, {
       cors: {
         origin: '*',
         methods: ['GET', 'POST']
@@ -28,7 +47,7 @@ export class WebSocketServer {
   initialize () {
     this.io.on('connection', client => {
       const uuid = uuidv4()
-      console.log('new client with uuid ' + uuid)
+      console.log('new client with uuid ' + uuid + ', real uuid: ' + client.id)
       const workers = this._workers
       const newWorker = new WebSocketWorker(uuid, this.rtcService, client)
       workers.set(uuid, newWorker)
@@ -49,7 +68,8 @@ export class WebSocketServer {
      */
   start () {
     this.initialize()
-    this.io.listen(this.port)
+    this.server.listen(this.port)
+    this.io.listen(this.server)
     console.log('Listening on port ' + this.port)
   }
 

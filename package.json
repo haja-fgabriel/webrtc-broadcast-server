@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "backpack build",
-    "start": "backpack dev",
+    "start": "set HTTPS=true&&backpack dev",
+    "start-http": "backpack dev",
     "test": "mocha --require @babel/register --require @babel/polyfill --recursive \"test/**/*.js\" --timeout 10000",
     "coverage": "nyc npm run test"
   },
@@ -19,6 +20,7 @@
     "backpack-core": "^0.8.4",
     "core-js": "^2.6.12",
     "detect-mocha": "^0.1.0",
+    "express": "^4.17.1",
     "socket.io": "^3.0.5"
   },
   "devDependencies": {
