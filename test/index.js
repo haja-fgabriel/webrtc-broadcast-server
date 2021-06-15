@@ -121,7 +121,7 @@ describe('RTCClientLinkedList', function () {
     assert(list.root !== null)
     const sons = []
     for (let i = 0; i < 3; i++) {
-      const son = new RTCClientNode(1, 1, { downloadSpeed: 1 })
+      const son = new RTCClientNode(i * 5, 1, { downloadSpeed: 1 })
       sons.push(son)
       list.add(son)
       if (i === 2) {
@@ -139,6 +139,12 @@ describe('RTCClientLinkedList', function () {
     assert(list.root.sons.length === 1)
     assert(list.root.sons[0].props.downloadSpeed === 100)
     assert(son.sons[0].key === 22)
+  })
+
+  it('remove son', function () {
+    list.remove(100)
+    assert(list.root.sons.length === 1)
+    assert(list.root.sons[0].key === 22)
   })
 })
 
