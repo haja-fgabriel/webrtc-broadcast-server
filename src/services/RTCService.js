@@ -40,7 +40,6 @@ export class RTCService extends Observable {
       super.notify(client, '[response]rtc:joining-as-viewer', undefined)
       const parent = room.getParentForClient(client)
       const sons = room.getSonsForClient(client)
-      console.log(`client ${client} has parent ${parent}`)
       if (parent) {
         // TODO maybe add more args
         console.log('send make-offer to parent ' + parent)
