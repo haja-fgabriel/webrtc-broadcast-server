@@ -67,3 +67,12 @@ RTCRoom.prototype.getSonsForClient = function (clientID) {
   }
   return undefined
 }
+
+/**
+ * Removes a client from the room
+ * @param {string} clientID
+ */
+RTCRoom.prototype.removeClient = function (clientID) {
+  this.topology.remove(clientID)
+  this.clients.delete(clientID)
+}

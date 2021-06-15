@@ -47,6 +47,15 @@ export class WebSocketWorker extends Observer {
         })
     })
 
+    this.wsClient.on('[request]rtc:room:leave', function () {
+      console.log(`client ${uuid} requesting to leave room '${this.inRoom}'`)
+      if (!this.inRoom) {
+        wsClient.emit('[error]rtc:room:not-connected')
+        return
+      }
+      service.leaveRoom(this.inRoom, uuid)
+    })
+
     // TODO add handler for removing client
 
     this.wsClient.on('[webrtc]offer-new-sons', function () {
@@ -79,11 +88,13 @@ export class WebSocketWorker extends Observer {
    * Uninitializes the connection of the client to the service.
    */
   close () {
+    console.log(`closing WebSocketWorker instance of ${this.uuid}`)
+    if (this.inRoom) {
+      console.log(`client ${this.uuid} requesting to leave room '${this.inRoom}'`)
+      this.rtcService.leaveRoom(this.inRoom, this.uuid)
+    }
     this.wsClient.removeAllListeners()
     this.rtcService.removeObserver(this.uuid)
-    if (this.inRoom) {
-      this.rtcService.removeClient(this.inRoom, this.uuid)
-    }
     this.wsClient.disconnect && this.wsClient.disconnect()
   }
 }

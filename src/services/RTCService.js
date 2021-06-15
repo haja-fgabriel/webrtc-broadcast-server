@@ -84,11 +84,27 @@ export class RTCService extends Observable {
   }
 
   /**
-     * Removes a client from the room.
-     * @param {string} roomName
-     * @param {string} client
-     */
+   * Removes a client from the room.
+   * @param {string} roomName
+   * @param {string} client
+   */
   leaveRoom (roomName, client) {
     // TODO notify client for disconnection
+    const room = this.roomRepository.get(roomName)
+    const sons = room.getSonsForClient(client)
+    const parent = room.getParentForClient(client)
+    if (!room) {
+      return
+    }
+    if (sons) {
+      sons.forEach(son => super.notify(client, '[webrtc]remove-peer', son))
+    }
+    if (parent) {
+      super.notify(parent, '[webrtc]remove-peer', client)
+      if (sons) {
+        sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
+      }
+    }
+    room.removeClient(client)
   }
 }
