@@ -39,7 +39,7 @@ RTCRoom.prototype.addClient = function (clientID, props) {
  */
 RTCRoom.prototype.getPropsForClient = function (clientID) {
   const node = this.clients.get(clientID)
-  return node.value
+  return node.props
 }
 
 /**
