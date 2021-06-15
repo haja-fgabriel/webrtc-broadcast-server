@@ -40,15 +40,17 @@ export class RTCService extends Observable {
       super.notify(client, '[response]rtc:joining-as-viewer', undefined)
       const parent = room.getParentForClient(client)
       const sons = room.getSonsForClient(client)
+      console.log(sons)
       if (parent) {
         // TODO maybe add more args
         console.log('send make-offer to parent ' + parent)
-        if (sons) {
+        console.log('send make-offer for sons ' + sons)
+        if (sons || sons.length) {
           sons.forEach(son => super.notify(parent, '[webrtc]remove-peer', son))
         }
         super.notify(parent, '[webrtc]make-offer', client)
       }
-      if (sons) {
+      if (sons || sons.length) {
         sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
       }
     } else {
