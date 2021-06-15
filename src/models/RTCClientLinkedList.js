@@ -1,7 +1,7 @@
 import { RTCClientNode } from './RTCClientNode'
 
 /**
- * A structure representing the linked list topology of all the connected
+ * A structure representing the doubly linked list topology of all the connected
  * clients to a room.
  * @export
  */
@@ -40,5 +40,22 @@ export class RTCClientLinkedList {
     node.sons = currentNode.sons
     currentNode.sons = [node]
     node.parent = currentNode
+  }
+
+  /**
+   * Removes a node from the linked list
+   * @param {string} key key of node
+   */
+  remove (key) {
+    let currentNode = this.root
+    while (currentNode && currentNode.key !== key) {
+      currentNode = currentNode.sons[0]
+    }
+    currentNode.sons[0].parent = currentNode.parent
+    currentNode.parent.sons = currentNode.sons
+
+    // this maybe deletes currentNode when the garbage collector is engaged
+    delete currentNode.parent
+    delete currentNode.sons
   }
 }
