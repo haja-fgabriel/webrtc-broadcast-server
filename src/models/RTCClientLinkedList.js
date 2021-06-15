@@ -20,9 +20,7 @@ export class RTCClientLinkedList {
     if (!node.props || node.props.downloadSpeed === undefined) {
       throw new Error('Node is missing the connection properties!')
     }
-    const self = this
     function isWorse (node, current) {
-      console.log(self)
       return node.props.downloadSpeed <= current.props.downloadSpeed
     }
     this.size++

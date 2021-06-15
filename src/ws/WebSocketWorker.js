@@ -49,6 +49,10 @@ export class WebSocketWorker extends Observer {
 
     // TODO add handler for removing client
 
+    this.wsClient.on('[webrtc]offer-new-sons', function () {
+      service.makeOfferForNewSons(uuid, this.inRoom)
+    })
+
     this.wsClient.on('[webrtc]send-offer', function (to, sdp) {
       service.notify(to, '[webrtc]send-offer', uuid, sdp)
     })

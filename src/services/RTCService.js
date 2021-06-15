@@ -50,9 +50,6 @@ export class RTCService extends Observable {
         }
         super.notify(parent, '[webrtc]make-offer', client)
       }
-      if (sons || sons.length) {
-        sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
-      }
     } else {
       room.addClient(client, connectionProps)
 
@@ -63,6 +60,18 @@ export class RTCService extends Observable {
 
     // TODO notify observer
     return Promise.resolve()
+  }
+
+  /**
+   * Makes offer for new sons.
+   * @param {string} client
+   */
+  makeOfferForNewSons (client, roomName) {
+    const room = this.roomRepository.get(roomName)
+    const sons = room.getSonsForClient(client)
+    if (sons) {
+      sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
+    }
   }
 
   /**
