@@ -20,7 +20,7 @@ export class RTCService extends Observable {
      * @param {*} client
      * @returns {Promise<void | Error>}
      */
-  async joinRoom (roomName, client) {
+  async joinRoom (roomName, client, connectionProps) {
     let room = this.roomRepository.get(roomName)
 
     if (this._observers.get(client) === undefined) {
@@ -36,16 +36,24 @@ export class RTCService extends Observable {
 
     if (room.broadcasterID) {
       // adding a viewer
-      room.addClient(client)
+      room.addClient(client, connectionProps)
       super.notify(client, '[response]rtc:joining-as-viewer', undefined)
       const parent = room.getParentForClient(client)
+      const sons = room.getSonsForClient(client)
+      console.log(`client ${client} has parent ${parent}`)
       if (parent) {
         // TODO maybe add more args
-        console.log('send make-offer to parent')
+        console.log('send make-offer to parent ' + parent)
+        if (sons) {
+          sons.forEach(son => super.notify(parent, '[webrtc]remove-peer', son))
+        }
         super.notify(parent, '[webrtc]make-offer', client)
       }
+      if (sons) {
+        sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
+      }
     } else {
-      room.addClient(client)
+      room.addClient(client, connectionProps)
 
       // TODO add parameters too
       super.notify(
@@ -70,7 +78,7 @@ export class RTCService extends Observable {
      * @param {string} roomName
      * @param {string} client
      */
-  removeClient (roomName, client) {
+  leaveRoom (roomName, client) {
     // TODO notify client for disconnection
   }
 }

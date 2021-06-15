@@ -16,6 +16,18 @@ export class RTCClientLinkedList {
    * @param {RTCClientNode} node
    */
   add (node) {
+    console.log(node.props)
+    if (!node.props || node.props.downloadSpeed === undefined) {
+      throw new Error('Node is missing the connection properties!')
+    }
+    const self = this
+    function isWorse (node, current) {
+      console.log(self)
+      if (current === self.root) {
+        return true
+      }
+      return node.props.downloadSpeed <= current.props.downloadSpeed
+    }
     this.size++
     if (this.root === null) {
       this.root = node
@@ -24,10 +36,14 @@ export class RTCClientLinkedList {
     let currentNode = this.root
     // mock tree taller than 2 nodes
     while (currentNode && currentNode.sons.length &&
-        currentNode.sons.length >= 1) {
+      isWorse(node, currentNode) && currentNode.sons.length >= 1) {
       currentNode = currentNode.sons[0]
     }
-    currentNode.sons.push(node)
+    for (let i = 0; i < currentNode.sons.length; i++) {
+      currentNode.sons[i].parent = node
+    }
+    node.sons = currentNode.sons
+    currentNode.sons = [node]
     node.parent = currentNode
   }
 }

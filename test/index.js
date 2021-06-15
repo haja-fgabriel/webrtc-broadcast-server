@@ -73,7 +73,7 @@ describe('RTCClientTree', function () {
     assert(tree.root !== null)
     const sons = []
     for (let i = 0; i < 3; i++) {
-      const son = new RTCClientNode()
+      const son = new RTCClientNode(1, 1, { downloadSpeed: 1 })
       sons.push(son)
       tree.add(son)
       if (i === 2) {
@@ -98,15 +98,15 @@ describe('RTCClientLinkedList', function () {
   })
 
   it('add root', function () {
-    const node = new RTCClientNode(1, 'node.js')
+    const node = new RTCClientNode(1, 'node.js', { downloadSpeed: 1 })
     list.add(node)
     assert(list.size === 1)
   })
 
   it('add two sons', function () {
     assert(list.root !== null)
-    const son = new RTCClientNode(22, 2)
-    const otherSon = new RTCClientNode(32, 5)
+    const son = new RTCClientNode(22, 2, { downloadSpeed: 1 })
+    const otherSon = new RTCClientNode(32, 5, { downloadSpeed: 1 })
     list.add(son)
     list.add(otherSon)
     assert(list.size === 3)
@@ -121,7 +121,7 @@ describe('RTCClientLinkedList', function () {
     assert(list.root !== null)
     const sons = []
     for (let i = 0; i < 3; i++) {
-      const son = new RTCClientNode()
+      const son = new RTCClientNode(1, 1, { downloadSpeed: 1 })
       sons.push(son)
       list.add(son)
       if (i === 2) {
@@ -131,6 +131,14 @@ describe('RTCClientLinkedList', function () {
         assert(list.root.sons[0].sons[0].sons.length === 1)
       }
     }
+  })
+
+  it('add fast son', function () {
+    const son = new RTCClientNode(100, 1, { downloadSpeed: 100 })
+    list.add(son)
+    assert(list.root.sons.length === 1)
+    assert(list.root.sons[0].props.downloadSpeed === 100)
+    assert(son.sons[0].key === 22)
   })
 })
 
@@ -170,6 +178,14 @@ describe('RTCRoom', function () {
     assert(room.getParentForClient('client2') === 'client1')
     assert(room.getParentForClient('client3') === 'client1')
     assert(room.getParentForClient('client4') === 'client2')
+  })
+
+  it('getSons', function () {
+    for (let i = 1; i <= 3; i++) {
+      room.addClient('client' + i)
+    }
+    assert(room.getSonsForClient('client1')[0] === 'client2')
+    assert(room.getSonsForClient('client1')[1] === 'client3')
   })
 })
 
@@ -216,7 +232,8 @@ describe('RTCService', function () {
   it('add client', function (done) {
     service.addObserver('12333', mockObserver(done))
     service.joinRoom('default-room', '12333')
-    assert(service.getClientsForRoom('default-room').length === 1)
+    console.log(service.getClientsForRoom('default-room').length)
+    assert(service.getClientsForRoom('default-room').length)
   })
 
   // TODO add tests for client removal

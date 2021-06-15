@@ -23,12 +23,12 @@ export default function RTCRoom (name) {
  * @param {string} clientID
  * @param {*} props
  */
-RTCRoom.prototype.addClient = function (clientID, props = null) {
-  const node = new RTCClientNode(clientID, props)
+RTCRoom.prototype.addClient = function (clientID, props) {
+  const node = new RTCClientNode(clientID, null, props)
   if (this.clients.size === 0) {
     this.broadcasterID = clientID
   }
-  this.topology.add(node)
+  this.topology.add(node, props)
   this.clients.set(clientID, node)
 }
 
@@ -51,6 +51,19 @@ RTCRoom.prototype.getParentForClient = function (clientID) {
   const node = this.clients.get(clientID)
   if (node && node.parent) {
     return node.parent.key
+  }
+  return undefined
+}
+
+/**
+ * Returns the list of client IDs of the connected sons.
+ * @param {string} clientID - the client ID
+ * @returns {string[] | undefined} - undefined when the given client is missing
+ */
+RTCRoom.prototype.getSonsForClient = function (clientID) {
+  const node = this.clients.get(clientID)
+  if (node) {
+    return node.sons.map(son => son.key)
   }
   return undefined
 }

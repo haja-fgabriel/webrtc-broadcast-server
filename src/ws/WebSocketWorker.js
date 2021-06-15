@@ -33,15 +33,16 @@ export class WebSocketWorker extends Observer {
     const uuid = this.uuid
 
     // Event handlers that link this worker to the service
-    this.wsClient.on('[request]rtc:room:join', function (roomName) {
-      console.log(`client ${uuid} requesting to join room '${roomName}'`)
+    this.wsClient.on('[request]rtc:room:join', function (roomName, connProps) {
+      console.log(`client ${uuid} requesting to join room '${roomName}' with connection props ${JSON.stringify(connProps)}`)
       if (this.inRoom) {
         wsClient.emit('[error]rtc:room:already-connected', this.inRoom)
         return
       }
-      service.joinRoom(roomName, uuid)
+      service.joinRoom(roomName, uuid, connProps)
         .then(() => { this.inRoom = roomName })
         .catch((e) => {
+          console.log(`Error for client ${uuid}: ${e}\n${e.stack}`)
           wsClient && wsClient.emit('[error]rtc:room', e)
         })
     })
