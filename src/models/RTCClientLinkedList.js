@@ -51,8 +51,12 @@ export class RTCClientLinkedList {
     while (currentNode && currentNode.key !== key) {
       currentNode = currentNode.sons[0]
     }
-    currentNode.sons[0].parent = currentNode.parent
-    currentNode.parent.sons = currentNode.sons
+    if (currentNode.sons[0]) {
+      currentNode.sons[0].parent = currentNode.parent
+    }
+    if (currentNode.parent) {
+      currentNode.parent.sons = currentNode.sons
+    }
 
     // this maybe deletes currentNode when the garbage collector is engaged
     delete currentNode.parent

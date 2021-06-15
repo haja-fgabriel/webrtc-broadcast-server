@@ -32,15 +32,17 @@ export class WebSocketWorker extends Observer {
     const service = this.rtcService
     const uuid = this.uuid
 
+    const self = this
+
     // Event handlers that link this worker to the service
     this.wsClient.on('[request]rtc:room:join', function (roomName, connProps) {
       console.log(`client ${uuid} requesting to join room '${roomName}' with connection props ${JSON.stringify(connProps)}`)
-      if (this.inRoom) {
+      if (self.inRoom) {
         wsClient.emit('[error]rtc:room:already-connected', this.inRoom)
         return
       }
       service.joinRoom(roomName, uuid, connProps)
-        .then(() => { this.inRoom = roomName })
+        .then(() => { self.inRoom = roomName })
         .catch((e) => {
           console.log(`Error for client ${uuid}: ${e}\n${e.stack}`)
           wsClient && wsClient.emit('[error]rtc:room', e)
@@ -54,12 +56,13 @@ export class WebSocketWorker extends Observer {
         return
       }
       service.leaveRoom(this.inRoom, uuid)
+      this.inRoom = undefined
     })
 
     // TODO add handler for removing client
 
     this.wsClient.on('[webrtc]offer-new-sons', function () {
-      service.makeOfferForNewSons(uuid, this.inRoom)
+      service.makeOfferForNewSons(uuid, self.inRoom)
     })
 
     this.wsClient.on('[webrtc]send-offer', function (to, sdp) {

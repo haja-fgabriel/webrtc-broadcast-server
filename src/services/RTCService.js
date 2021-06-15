@@ -67,6 +67,7 @@ export class RTCService extends Observable {
    * @param {string} client
    */
   makeOfferForNewSons (client, roomName) {
+    console.log(`client ${client} requesting make-offer for all new sons`)
     const room = this.roomRepository.get(roomName)
     const sons = room.getSonsForClient(client)
     if (sons) {
@@ -100,7 +101,9 @@ export class RTCService extends Observable {
       sons.forEach(son => super.notify(client, '[webrtc]remove-peer', son))
     }
     if (parent) {
+      console.log(`notifying ${parent} to remove ${client}`)
       super.notify(parent, '[webrtc]remove-peer', client)
+      console.log(`notifying ${parent} to make offer for ${JSON.stringify(sons)}`)
       if (sons) {
         sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
       }
