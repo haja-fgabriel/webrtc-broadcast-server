@@ -75,4 +75,7 @@ RTCRoom.prototype.getSonsForClient = function (clientID) {
 RTCRoom.prototype.removeClient = function (clientID) {
   this.topology.remove(clientID)
   this.clients.delete(clientID)
+  if (this.clients.size === 0) {
+    this.broadcasterID = undefined
+  }
 }

@@ -30,7 +30,7 @@ export class RTCClientLinkedList {
     }
     let currentNode = this.root
     // mock tree taller than 2 nodes
-    while (currentNode && currentNode.sons.length &&
+    while (currentNode && currentNode.sons && currentNode.sons.length &&
       isWorse(node, currentNode.sons[0]) && currentNode.sons.length >= 1) {
       currentNode = currentNode.sons[0]
     }
@@ -47,6 +47,7 @@ export class RTCClientLinkedList {
    * @param {string} key key of node
    */
   remove (key) {
+    this.size--
     let currentNode = this.root
     while (currentNode && currentNode.key !== key) {
       currentNode = currentNode.sons[0]
@@ -56,6 +57,9 @@ export class RTCClientLinkedList {
     }
     if (currentNode.parent) {
       currentNode.parent.sons = currentNode.sons
+    }
+    if (currentNode === this.root) {
+      this.root = null
     }
 
     // this maybe deletes currentNode when the garbage collector is engaged
