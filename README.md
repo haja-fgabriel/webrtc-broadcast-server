@@ -9,7 +9,7 @@ Linted with ESLint (with standard JS guidelines), transpiled with Babel, tested 
 ## Installation
 1. Clone (or download) the repo wherever you want on your computer
 2. ``npm install`` from the root folder of the cloned repo
-3. Provide the SSL certificates for making HTTPS work properly, as following:
+3. Provide the SSL certificate for making HTTPS work properly, as following:
 -- ``cert.pem`` - the certificate
 -- ``chain.pem`` - the intermediate signing authority
 -- ``privkey.pem`` - the private key
