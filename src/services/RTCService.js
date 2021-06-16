@@ -105,7 +105,7 @@ export class RTCService extends Observable {
       super.notify(parent, '[webrtc]remove-peer', client)
       console.log(`notifying ${parent} to make offer for ${JSON.stringify(sons)}`)
       if (sons) {
-        sons.forEach(son => super.notify(client, '[webrtc]make-offer', son))
+        sons.forEach(son => super.notify(parent, '[webrtc]make-offer', son))
       }
     }
     room.removeClient(client)
