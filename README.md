@@ -9,9 +9,13 @@ Linted with ESLint (with standard JS guidelines), transpiled with Babel, tested 
 ## Installation
 1. Clone (or download) the repo wherever you want on your computer
 2. ``npm install`` from the root folder of the cloned repo
-
+3. Provide the SSL certificates for making HTTPS work properly, as following:
+-- ``cert.pem`` - the certificate
+-- ``chain.pem`` - the intermediate signing authority
+-- ``privkey.pem`` - the private key
 ## Usage
 - ``npm build`` - compiles the server to old-school JS
-- ``npm start`` - starts the server normally (on port 8000). An environment variable will be used in a future commit.
+- ``npm start`` - starts the server normally (on port 8000). The port can be modified using the PORT environment variable
+- ``npm run start-local`` - starts the server as an HTTP server (for local testing of the app)
 - ``npm test`` - runs all the tests
 - ``npm run coverage`` - runs all the tests and get a coverage log 
