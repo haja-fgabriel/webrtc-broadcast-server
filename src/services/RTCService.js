@@ -31,7 +31,7 @@ export class RTCService extends Observable {
 
     if (room === undefined) {
       room = new RTCRoom(roomName)
-      this.roomRepository.add(room)
+      this.roomRepository.set(room)
     }
 
     if (room.broadcasterID) {
@@ -44,7 +44,7 @@ export class RTCService extends Observable {
       if (parent) {
         // TODO maybe add more args
         console.log('send make-offer to parent ' + parent)
-        console.log('send make-offer for sons ' + sons)
+        console.log('send remove-peer for sons ' + sons)
         if (sons || sons.length) {
           sons.forEach(son => super.notify(parent, '[webrtc]remove-peer', son))
         }
@@ -92,9 +92,15 @@ export class RTCService extends Observable {
   leaveRoom (roomName, client) {
     // TODO notify client for disconnection
     const room = this.roomRepository.get(roomName)
+    if (!room) {
+      return
+    }
     const sons = room.getSonsForClient(client)
     const parent = room.getParentForClient(client)
-    if (!room) {
+    if (room.broadcasterID === client) {
+      console.log('The boss is leaving')
+      room.clients.forEach((node, uuid) => super.notify(uuid, '[webrtc]party-over'))
+      this.roomRepository.delete(roomName)
       return
     }
     if (sons) {

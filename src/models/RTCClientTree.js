@@ -36,16 +36,4 @@ export default class RTCClientTree {
     currentNode.sons.push(node)
     node.parent = currentNode
   }
-
-  remove () {
-
-  }
-
-  search () {
-
-  }
-
-  update () {
-
-  }
 }

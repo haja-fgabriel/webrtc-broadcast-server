@@ -11,7 +11,7 @@ export function RTCRoomInMemoryRepository () {
      * Add a room to the repository.
      * @param {RTCRoom} room
      */
-  this.add = function (room) {
+  this.set = function (room) {
     this.rooms.set(room.name, room)
   }
 
@@ -22,5 +22,13 @@ export function RTCRoomInMemoryRepository () {
      */
   this.get = function (roomName) {
     return this.rooms.get(roomName)
+  }
+
+  /**
+   * Deletes a room.
+   * @param {string} roomName
+   */
+  this.delete = function (roomName) {
+    this.rooms.delete(roomName)
   }
 }

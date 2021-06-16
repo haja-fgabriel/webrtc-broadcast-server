@@ -49,6 +49,9 @@ export class RTCClientLinkedList {
   remove (key) {
     this.size--
     let currentNode = this.root
+    if (!currentNode) {
+      return
+    }
     while (currentNode && currentNode.key !== key) {
       currentNode = currentNode.sons[0]
     }
