@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  sonarqube:
+    build: .
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - 9000:9000
+
+  sonar-scanner:
+    build: ./sonar-scanner/
+    environment:
+      SONAR_HOST_URL: http://sonarqube:9000
+      # INFO create a new project and token in SonarQube, then change the value below
+      # SONAR_LOGIN: 342eba671eac520d56d13a65476880de07c8a893
+    volumes:
+      - ../:/usr/src
+    command: |
+      sonar-scanner
+        -Dsonar.sources=src/,test/
+        -Dsm.toolchaindir=/SourceMeter-10.0.0-x64-Linux
+        -Dsonar.projectKey=webrtc
+        -Dsonar.login=058964bf69224c6dd69a70ba6bfb61089a12819d
+        -X
+    depends_on:
+      - sonarqube

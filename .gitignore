@@ -132,3 +132,15 @@ temp/
 
 # Sandbox file, where I'm experimenting with JavaScript features
 sandbox.js
+
+# SonarQube related folders
+result/
+.scannerwork/
+
+# macOS-specific
+.DS_Store
+
+# Black formatter specific
+.python-version
+
+.vscode/
