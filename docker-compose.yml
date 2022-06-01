@@ -18,6 +18,7 @@ services:
     build: .
     environment:
       PORT: 80
+      CLIENT_TOPOLOGY: list
     volumes:
       - ./:/root/app
     
