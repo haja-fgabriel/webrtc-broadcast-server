@@ -19,3 +19,18 @@ Linted with ESLint (with standard JS guidelines), transpiled with Babel, tested 
 - ``npm run start-local`` - starts the server as an HTTP server (for local testing of the app)
 - ``npm test`` - runs all the tests
 - ``npm run coverage`` - runs all the tests and get a coverage log 
+
+## Run with Docker
+1. Clone the repo
+2. Set up the external URL to the WebSocket server. It should use this pattern:
+
+```
+https://<domain-name>/wsapp
+```
+Please ensure that you provide it under a `SERVER_URL` variable in the `client/.env` file.
+
+3. `docker-compose build --no-cache`. The `--no-cache` argument enforces running all steps, including cloning this repo: https://github.com/haja-fgabriel/webrtc-broadcast-client
+
+In this step, the JS files are compiled to singular source files.
+
+4. `docker-compose up` - starts all the containers
