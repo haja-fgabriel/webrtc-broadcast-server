@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  http-proxy:
+    image: nginx:1.22.0
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - client-build
+      - ws-server
+    volumes:
+      - ./build/client:/app_client
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+  
+  ws-server:
+    build: .
+    environment:
+      PORT: 80
+    volumes:
+      - ./:/root/app
+    
+  client-build:
+    build: 
+      context: client/ 
+      args:
+      - no-cache=true
+    volumes:
+      - ./client/.env:/root/app/webrtc-broadcast-client/.env
+      - ./build/client:/root/app_build
+    command: |
+      cp -a build/. /root/app_build
