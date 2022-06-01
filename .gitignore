@@ -144,3 +144,6 @@ result/
 .python-version
 
 .vscode/
+
+# SSL certificates
+certs/
