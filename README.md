@@ -33,4 +33,6 @@ Please ensure that you provide it under a `SERVER_URL` variable in the `client/.
 
 In this step, the JS files are compiled to singular source files.
 
-4. `docker-compose up` - starts all the containers
+4. Bring an SSL certificate and put it into a new `certs/` folder. The full-chain certificate should be named `fullchain1.pem` and the private key should be `privkey1.pem`
+
+5. `docker-compose up` - starts all the containers
