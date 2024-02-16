@@ -29,7 +29,7 @@ https://<domain-name>/wsapp
 ```
 Please ensure that you provide it under a `SERVER_URL` variable in the `client/.env` file.
 
-3. `docker-compose build --no-cache`. The `--no-cache` argument enforces running all steps, including cloning this repo: https://github.com/haja-fgabriel/webrtc-broadcast-client
+3. `docker-compose build --no-cache`. The `--no-cache` argument enforces running all steps, including cloning this repo: https://github.com/haja-fgabriel/webrtc-broadcast-client (TODO add the [frontend]( https://github.com/haja-fgabriel/webrtc-broadcast-client) as a submodule) 
 
 In this step, the JS files are compiled to singular source files.
 
